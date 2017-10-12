@@ -10,10 +10,11 @@ class MenuController
     def main_menu
         puts "Main Menu - #{address_book.entries.count} entries"
         puts "1 - View all entries"
-        puts "2 - Create an entry"
-        puts "3 - Search for an entry"
-        puts "4 - Import entries from a CVS"
-        puts "5 - Exit"
+        puts "2 - View specific entry"
+        puts "3 - Create an entry"
+        puts "4 - Search for an entry"
+        puts "5 - Import entries from a CVS"
+        puts "6 - Exit"
         print "Enter your selection: "
         
         selection = gets.to_i
@@ -25,17 +26,21 @@ class MenuController
                 main_menu
             when 2
                 system "clear"
-                create_entry
+                view_specific_entry
                 main_menu
             when 3
                 system "clear"
-                search_entries
+                create_entry
                 main_menu
             when 4
                 system "clear"
-                read_cvs
+                search_entries
                 main_menu
             when 5
+                system "clear"
+                read_cvs
+                main_menu
+            when 6
                 puts "Good-bye!"
                 exit(0)
             else
@@ -53,6 +58,22 @@ class MenuController
         end
         system "clear"
         puts "End of entries"
+    end
+    
+    def view_specific_entry
+        print "Enter the entry number: "
+        number = gets.to_i
+        if address_book.entries.length < 1
+            system "clear"
+            puts "Sorry there is no entry to display. Please add entry/entries"
+        elsif number >= 0 && number < address_book.entries.length
+            system "clear"
+            puts "This is entry number #{number}"
+            puts address_book.entries[number]
+        else
+            system "clear"
+            puts "Sorry, that is not a valid entry number. Please try again and enter entry number between 0 and #{address_book.entries.length - 1}"
+        end
     end
     
     def create_entry
